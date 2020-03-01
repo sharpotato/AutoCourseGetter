@@ -28,7 +28,7 @@ post31 = {"_id" : 659, "name" : "Austin Myhre", "score" : 239213}
 #results = collection.update_one({"_id":69 }, {"$set":{"name":"Adryanna"}})
 
 
-#results = collection.delete_one({"_id" : "CSE 015"})
+results = collection.delete_many({})
 # or delete_many
 #if there is a _one, there is a _many
 # Finding one thing  results = collection.find_one({"_id":629})
@@ -40,3 +40,9 @@ print(results)
 for result in results:
     print(result["_id"])
 '''
+
+units = []
+
+for x in soup.find_all("?2"):
+    ?3 = ?1.find('a')
+  #  classes.append(?3.attrs) What are we appending for this variable
