@@ -5,12 +5,38 @@ cluster = MongoClient("mongodb://Admeme_Jaydon:Syrv()|()ocky@cluster0-shard-00-0
 db = cluster["Hackathon_Cloin_Classes"]
 collection = db["Class Info"]
 
+#These are just kinda here now
 #post4 = {"_id" : 12, "Course Number" : "SDa", "score" : 6, "Course Description" : "PH"}
 #post3 = {"_id" : 69, "name" : "Austin Myhre", "score" : 21903921321}
-#collection.insert_many([post4, post3])
 
+#Properly set this up
+classes = {"_id":"","Units":"","Course Name":"","Course Details":"","Course Description":"","GE Requirements":"","Prereqs and Restrictions":"",}
+
+#For a for/while loop and get info from Hackathon Classes.py
+
+post35 = {"_id": "CSE 015", "name" : "CSE 015", "Units" : 4}
+post34 = {"_id" : 629, "name" : "Austin Myhre", "score" : 6}
+post33 = {"_id" : 639, "name" : "Austin Myhre", "score" : 211}
+post32 = {"_id" : 649, "name" : "Austin Myhre", "score" : 21221321}
+post31 = {"_id" : 659, "name" : "Austin Myhre", "score" : 239213}
+
+
+#collection.insert_one(post35)
+
+# How to update things. If the var after $set isn't already in the file, you can add it in. Can also change $set to another thing in the api, like $inc.
+#Thinking of using $inc of 1 to determine if a class is open or not
+#results = collection.update_one({"_id":69 }, {"$set":{"name":"Adryanna"}})
+
+
+#results = collection.delete_one({"_id" : "CSE 015"})
+# or delete_many
+#if there is a _one, there is a _many
+# Finding one thing  results = collection.find_one({"_id":629})
+#                   print(results)
+
+''' Finding multiple things
 results = collection.find({"name" : "Austin Myhre"})
 print(results)
 for result in results:
     print(result["_id"])
-
+'''
