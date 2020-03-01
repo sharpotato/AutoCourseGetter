@@ -5,12 +5,27 @@ cluster = MongoClient("mongodb://Admeme_Jaydon:Syrv()|()ocky@cluster0-shard-00-0
 db = cluster["Hackathon_Cloin_Classes"]
 collection = db["Class Info"]
 
+#These are just kinda here now
 #post4 = {"_id" : 12, "Course Number" : "SDa", "score" : 6, "Course Description" : "PH"}
 #post3 = {"_id" : 69, "name" : "Austin Myhre", "score" : 21903921321}
-#collection.insert_many([post4, post3])
 
+post35 = {"_id" : "CSE 015", "name" : "CSE 015", "Units" : 4}
+post34 = {"_id" : 629, "name" : "Austin Myhre", "score" : 6}
+post33 = {"_id" : 639, "name" : "Austin Myhre", "score" : 211}
+post32 = {"_id" : 649, "name" : "Austin Myhre", "score" : 21221321}
+post31 = {"_id" : 659, "name" : "Austin Myhre", "score" : 239213}
+
+
+#collection.insert_one(post35)
+
+results = collection.delete_one({"_id" : "CSE 015"})
+# or delete_many
+# Finding one thing  results = collection.find_one({"_id":629})
+#                   print(results)
+
+''' Finding multiple things
 results = collection.find({"name" : "Austin Myhre"})
 print(results)
 for result in results:
     print(result["_id"])
-
+'''
