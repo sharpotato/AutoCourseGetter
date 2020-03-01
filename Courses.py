@@ -35,7 +35,7 @@ def getCourseInfo(coid):
 
     def CourseDetailRemoveHTML(topicUnder):
         global details
-        details = str(html[start + 27: html.find(topicUnder)])
+        details = str(html[start + 27 : html.find(topicUnder)])
         for i, word in enumerate(details):
             if word == "<":
                 details = details[0 : i] + "    " + details[i + 4: len(details)-1]
@@ -48,7 +48,7 @@ def getCourseInfo(coid):
         if html.find("Req") != 1:
             CourseDetailRemoveHTML("Req")
 
-        print(details)
+        print("Course Details: " + details)
 
 if coid == "Error: ":
     print("\tNo class with that name and number found")
