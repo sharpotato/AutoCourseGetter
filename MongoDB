@@ -1,0 +1,16 @@
+import pymongo
+from pymongo import MongoClient
+
+cluster = MongoClient("mongodb://Admeme_Jaydon:Syrv()|()ocky@cluster0-shard-00-00-ghgjv.mongodb.net:27017,cluster0-shard-00-01-ghgjv.mongodb.net:27017,cluster0-shard-00-02-ghgjv.mongodb.net:27017/test?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true&w=majority")
+db = cluster["Hackathon_Cloin_Classes"]
+collection = db["Class Info"]
+
+#post4 = {"_id" : 12, "Course Number" : "SDa", "score" : 6, "Course Description" : "PH"}
+#post3 = {"_id" : 69, "name" : "Austin Myhre", "score" : 21903921321}
+#collection.insert_many([post4, post3])
+
+results = collection.find({"name" : "Austin Myhre"})
+print(results)
+for result in results:
+    print(result["_id"])
+
