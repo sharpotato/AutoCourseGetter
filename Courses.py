@@ -3,9 +3,6 @@ from HackMerced_2020 import coidGet
 from bs4 import BeautifulSoup
 search = "CSE 015"
 coid = coidGet.findCourse(search)
-className = "just discovered"
-units = "Units: "
-terms = "offered:"
 
 def getCourseInfo(coid):
     if coid == "Error: ":
@@ -14,29 +11,28 @@ def getCourseInfo(coid):
         url = 'https://catalog.ucmerced.edu/ajax/preview_course.php?catoid=16&coid=' + str(coid) + '&link_text=&display_options=a:2:{s:8:~location~;s:6:~search~;s:10:~best_match~;s:30:~%3Cstrong%3E%20Best%20Match:%20%3C/strong%3E~;}&show'
         html = str(requests.get(url).content)
         soup = str(BeautifulSoup(html, 'html.parser').get_text())
-        #print("\nENTIRE HTML FILE: " + soup +"\n")
+        print("\nENTIRE HTML FILE: " + soup +"\n")
 
         #Class Name
-        if html.find(className) != -1:
-            start = html.find(className) + 18
-            otherEnd = html.find(":", start)
-            end = html.find("\'", start) -1
-            numTypeEnd = html.find(":", start)
-            id = html[start : otherEnd]
-            name = html[start : end]
-            #print(html[start : end])
+        if soup.find("\\t\\t\\r\\n",100) != -1:
+            start = soup.find("\\t\\t\\r\\n",160)+8
+            otherEnd = soup.find(":", start)
+            end = soup.find("Units") - 1
+            numTypeEnd = soup.find(":", start)
+            id = soup[start : otherEnd]
+            name = soup[start : end]
+            print(name)
 
         #Units
-        if html.find(units) != 1:
-            start = html.find(units)
+        if html.find("Units: ") != 1:
+            start = html.find("Units: ")
             numUnits = html[start : start+8]
-            #print(html[start : start+8])
+            print(html[start : start+8])
 
         #Description
-        if html.find("<br><br>", start+17) != 1:
-            end = html.find("<br><br>", start+18)
-            description = html[start+16: end]
-            #print("Description: " + html[start+16: end])
+        end = soup.find("Course Details")
+        description = soup[soup.find("Units: ")+8 : end]
+        print("Description: " + soup[soup.find("Units: ")+8 : end])
 
 
         def CourseDetailRemoveHTML(topicUnder):
@@ -62,12 +58,12 @@ def getCourseInfo(coid):
                         newGeReq += "     B"
                     else:
                         newGeReq += genReq[x]
-                #print(newGeReq)
+                print(newGeReq)
 
         def RandR():
             global RR
             RR = soup[soup.find("Requisites") : len(soup)-152]
-            #print(RR)
+            print(RR)
 
         #Stuff under Course Details
         if html.find("Course Details") != 1:
@@ -81,7 +77,7 @@ def getCourseInfo(coid):
                 CourseDetailRemoveHTML("Req")
                 RandR()
 
-        #print("Course Details: " + betterDetails)
+        print("Course Details: " + betterDetails)
 
 
 
@@ -90,4 +86,4 @@ def getCourseInfo(coid):
 
 
 
-#print(getCourseInfo(coid))
+print(getCourseInfo(coid))
