@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Course Checker</title>
+    <script src="https://kit.fontawesome.com/2a4f17ebfb.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js"></script>
+    <link rel= "stylesheet" href ="styles.css">
+</head>
+<body>
+    <script>
+        var MongoClient = require('mongodb').MongoClient;
+        var url= "//mongodb+srv://Admeme_Jaydon:Syrv()|()ocky@cluster0-ghgjv.mongodb.net/test?retryWrites=true&w=majority";
+        
+        function createListOfClassesAsHTML(classesList) {
+            let outputString = '';
+
+            for (let i = 0; i < classesList.length; i++) {
+                outputString += `<li>${classesList[i].name}</li>`
+            }
+
+            return outputString;
+        }
+
+        function searchDatabase() {
+            const SearchInput = document.getElementById('search-input');
+
+            const searchValue = SearchInput.value;
+
+            MongoClient.connect(url, function(err, db){
+                if (err) throw err;
+                var dbo = db.db("mydb");
+                var query = {'SearchInput.value'}
+                dbo.collection("Hackathon_Cloin_Classes.Class Info").find(query).toArray(function(err, result){
+                if (err) throw err;
+                console.log(result);
+                db.close();
+                });
+            });
+
+
+            // create a database query, that checks for searchValue in the database
+            // call a REST api request to mongodb with the database query that returns our data
+            // use the data we have recieved to output content below our search bar
+        
+            const classesList = [{ name: ''}];
+
+            const Output = document.getElementById('output');
+
+            const listAsHTML = createListOfClassesAsHTML(classesList);
+
+            Output.innerHTML = `
+                <ul>
+                    ${listAsHTML}
+                </ul>
+            `
+        }
+
+       window.onload = () => {
+        
+            const SearchButton = document.getElementById('search-button');
+
+            SearchButton.addEventListener('click', searchDatabase)
+       }
+    </script>
+
+<div class= "header">
+    <h1>UC Merced Course Checker</h1>
+</div>
+
+<div class="search-bar">
+    <input id="search-input" class="search-bar__input" type="text" name="" placeholder="Enter a Course Number">
+    <div id="search-button" class="searchbtn">
+        <i class="fas fa-search"></i> Search
+    </div>
+</div>
+<div id="output"></div>
+
+
+
+</body>
+</html>
