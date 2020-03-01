@@ -15,19 +15,6 @@ def getCourseInfo(coid):
         html = str(requests.get(url).content)
         soup = str(BeautifulSoup(html, 'html.parser').get_text())
         print("\nENTIRE HTML FILE: " + soup +"\n")
-        x = 0
-        betterSoup = ""
-        while x < len(soup):
-            if (soup[x:x+2] != "\\t"):
-                betterSoup += soup[x]
-                x += 1
-            elif(soup[x:x+2] == "\\t"):
-                x += 2
-            elif(soup[x:x+2] == "\\r"):
-                x += 2
-            elif(soup[x:x+2] == "\\n"):
-                x += 2
-        print(betterSoup)
 
         #Class Name
         if html.find(className) != -1:
@@ -65,23 +52,43 @@ def getCourseInfo(coid):
                 else:
                     newEnd = details.find(">", x)
                     x += (newEnd-x+1)
+        def GEReq():
+            global newGeReq
+            if html.find("Req") != 1:
+                genReq = soup[soup.find("GE Req") : soup.find("Req",soup.find("GE Req")+10)]
+                newGeReq = ""
+                for x in range(len(genReq)):
+                    if genReq[x:x+5] == "Badge":
+                        newGeReq += "     B"
+                    else:
+                        newGeReq += genReq[x]
+                print(newGeReq)
 
+        def RandR():
+            global RR
+            RR = soup[soup.find("Requisites") : len(soup)-152]
+            print(RR)
 
         #Stuff under Course Details
         if html.find("Course Details") != 1:
+
             start = html.find("Course Details")
             if html.find("GE Req") != 1:
                 CourseDetailRemoveHTML("GE Req")
-
+                GEReq()
+                RandR()
             elif html.find("Req") != 1:
                 CourseDetailRemoveHTML("Req")
+                RandR()
 
-            print("Course Details: " + betterDetails)
+        print("Course Details: " + betterDetails)
 
 
-        return id, name, numUnits, description, betterDetails
+
+        return id, name, numUnits, description, betterDetails, newGeReq, RR
 
 
 
 
 print(getCourseInfo(coid))
+#152 from the end
