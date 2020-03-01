@@ -11,28 +11,28 @@ def getCourseInfo(coid):
         url = 'https://catalog.ucmerced.edu/ajax/preview_course.php?catoid=16&coid=' + str(coid) + '&link_text=&display_options=a:2:{s:8:~location~;s:6:~search~;s:10:~best_match~;s:30:~%3Cstrong%3E%20Best%20Match:%20%3C/strong%3E~;}&show'
         html = str(requests.get(url).content)
         soup = str(BeautifulSoup(html, 'html.parser').get_text())
-        print("\nENTIRE HTML FILE: " + soup +"\n")
+        #print("\nENTIRE HTML FILE: " + soup +"\n")
 
         #Class Name
-        if soup.find("\\t\\t\\r\\n",100) != -1:
-            start = soup.find("\\t\\t\\r\\n",160)+8
+        if soup.find("[Print Course]\\r\\n\\t\\t\\t\\t\\r\\n",100) != -1:
+            start = soup.find("[Print Course]\\r\\n\\t\\t\\t\\t\\r\\n",160) + len("[Print Course]\\r\\n\\t\\t\\t\\t\\r\\n")
             otherEnd = soup.find(":", start)
             end = soup.find("Units") - 1
             numTypeEnd = soup.find(":", start)
             id = soup[start : otherEnd]
             name = soup[start : end]
-            print(name)
+            #print(name)
 
         #Units
         if html.find("Units: ") != 1:
             start = html.find("Units: ")
             numUnits = html[start : start+8]
-            print(html[start : start+8])
+            #print(html[start : start+8])
 
         #Description
         end = soup.find("Course Details")
         description = soup[soup.find("Units: ")+8 : end]
-        print("Description: " + soup[soup.find("Units: ")+8 : end])
+        #print("Description: " + soup[soup.find("Units: ")+8 : end])
 
 
         def CourseDetailRemoveHTML(topicUnder):
@@ -58,12 +58,12 @@ def getCourseInfo(coid):
                         newGeReq += "     B"
                     else:
                         newGeReq += genReq[x]
-                print(newGeReq)
+                #print(newGeReq)
 
         def RandR():
             global RR
             RR = soup[soup.find("Requisites") : len(soup)-152]
-            print(RR)
+            #print(RR)
 
         #Stuff under Course Details
         if html.find("Course Details") != 1:
@@ -77,7 +77,7 @@ def getCourseInfo(coid):
                 CourseDetailRemoveHTML("Req")
                 RandR()
 
-        print("Course Details: " + betterDetails)
+        #print("Course Details: " + betterDetails)
 
 
 
@@ -86,4 +86,4 @@ def getCourseInfo(coid):
 
 
 
-print(getCourseInfo(coid))
+#print(getCourseInfo(coid))
